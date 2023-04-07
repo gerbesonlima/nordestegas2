@@ -1,0 +1,100 @@
+body {
+  background-color: #00A0E9;
+}
+
+form {
+  max-width: 500px;
+  margin: 0 auto;
+  background-color: #F7F7F7;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+label {
+  display: block;
+  margin-bottom: 10px;
+}
+
+input[type="text"],
+select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: none;
+  margin-bottom: 20px;
+}
+
+input[type="radio"] {
+  margin-right: 10px;
+}
+
+button {
+  background-color: #00A0E9;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+button:hover {
+  background-color: #0077B5;
+}
+
+h1, a,p {
+  color: #fff;
+  text-align: center;
+
+}
+
+a {
+  text-decoration: none;
+}
+
+form > div {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+form > div > label {
+  flex-basis: 40%;
+}
+
+form > div > div {
+  flex-basis: 60%;
+  display: flex;
+  align-items: center;
+}
+
+form > div > div > label {
+  margin-right: 20px;
+}
+
+@media (max-width: 600px) {
+  form {
+    padding: 10px;
+  }
+
+  form > div {
+    flex-direction: column;
+  }
+ 
+
+  form > div > label {
+    margin-bottom: 5px;
+  }
+
+  form > div > div {
+    flex-direction: column;
+  }
+
+  form > div > div > label {
+    margin-bottom: 5px;
+  }
+
+  button {
+    width: 100%;
+  }
+}

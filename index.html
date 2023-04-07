@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="estilo.css">
+    <title>Nordeste Gas</title>
+</head>
+<body>
+    
+    <h1>Nordeste Gas</h1><br>
+    <p class="p">Faça seu pedido no formulario abaixo e depois de finaliza-lo por favor para facilitar a entrega envie-nos tambem a localização por GPS</p>
+    <a href="https://api.whatsapp.com/send?phone=5586994142411" target="_blank"></a><br>
+    
+    <form>
+        <label for="nome">Nome:</label>
+        <input type="text" name="nome" id="nome" required><br>
+
+        <label for="pedido">Escolha seu pedido:</label>
+        <select name="pedido" id="pedido">
+            <option value="Gas 13kg">Gas 13kg</option>
+            <option value="Agua">Agua</option>
+            <option value="Registro de gas">Registro de gas</option>
+        </select><br>
+        
+        <label for="quantidade">Quantidade:</label>
+        <input type="number" name="quantidade" id="quantidade"><br>
+        
+        <button type="button" onclick="adicionarPedido()">Adicionar ao pedido</button>
+        
+        <div id="lista-pedidos">
+            <h2>Pedido:</h2>
+            <ul>
+            </ul>
+        </div>
+        
+
+        <label for="quantidade">Quantidade:</label>
+        <input type="number" name="quantidade" id="quantidade" min="1" max="10" value="1" required><br>
+
+        <label for="pagamento">Selecione forma de pagamento:</label>
+          
+        <input  type="radio" name="pagamento" value="dinheiro" id="dinheiro" required>
+        <label for="dinheiro">Dinheiro</label>
+        <input  type="radio" name="pagamento" value="pix" id="pix">
+        <label for="pix">PIX</label>
+        <input type="radio" name="pagamento" value="debito" id="debito">
+        <label for="debito">Débito</label>
+        <input type="radio" name="pagamento" value="credito" id="credito">
+        <label for="credito">Cartão de Crédito</label><br>
+    
+
+        <label for="endereco">Endereço completo:</label>
+        <input type="text" name="endereco" id="endereco" required><br>
+
+        <label for="cep">CEP:</label>
+        <input type="text" name="cep" id="cep" required><br>
+        <button type="button" onclick="enviarMensagem()">Enviar mensagem para Whatsapp</button>
+    </form>
+    <script>
+        // Variável global para armazenar a lista de pedidos
+var listaPedidos = [];
+
+function adicionarPedido() {
+  var pedido = document.getElementById("pedido").value;
+  var quantidade = document.getElementById("quantidade").value;
+
+  // Cria um objeto com as informações do pedido
+  var novoPedido = {
+    item: pedido,
+    quantidade: quantidade
+  };
+
+  // Adiciona o novo pedido à lista de pedidos
+  listaPedidos.push(novoPedido);
+
+  // Atualiza a lista de pedidos no HTML
+  atualizarListaPedidos();
+}
+
+function atualizarListaPedidos() {
+  var listaPedidosHtml = document.querySelector("#lista-pedidos ul");
+  listaPedidosHtml.innerHTML = "";
+
+  // Cria um elemento li para cada item na lista de pedidos
+  for (var i = 0; i < listaPedidos.length; i++) {
+    var pedido = listaPedidos[i];
+    var li = document.createElement("li");
+    li.textContent = pedido.item + " - Quantidade: " + pedido.quantidade;
+    listaPedidosHtml.appendChild(li);
+  }
+}
+
+function enviarMensagem() {
+  var nome = document.getElementById("nome").value;
+  var pedido = document.getElementById("pedido").value;
+  var pagamento = document.querySelector('input[name="pagamento"]:checked').value;
+  var endereco = document.getElementById("endereco").value;
+  var cep = document.getElementById("cep").value;
+  var mensagem = "Novo pedido de " + pedido + "\n\n" +
+      "Nome: " + nome + "\n" +
+      "Forma de pagamento: " + pagamento + "\n" +
+      "Endereço: " + endereco + " - CEP: " + cep;
+
+  // Adiciona as quantidades selecionadas à mensagem
+  var quantidades = document.getElementsByClassName("quantidade");
+  for (var i = 0; i < quantidades.length; i++) {
+      if (quantidades[i].value != "") {
+          mensagem += "\n" + quantidades[i].getAttribute("data-item") + ": " + quantidades[i].value;
+      }
+  }
+
+  // Adiciona a lista de pedidos à mensagem
+  if (listaPedidos.length > 0) {
+    mensagem += "\n\nLista de pedidos:\n";
+    for (var i = 0; i < listaPedidos.length; i++) {
+      mensagem += listaPedidos[i].item + " - Quantidade: " + listaPedidos[i].quantidade + "\n";
+    }
+  }
+
+  var url = "https://api.whatsapp.com/send?phone=5586994142411&text=" + encodeURIComponent(mensagem);
+  window.open(url, '_blank');
+}
+
+    </script>
+</body>
+</html>
